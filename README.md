@@ -47,7 +47,3 @@ This package is not affiliated with or endorsed by SciELO. Web scraping is used 
 
 ## Contributing
 Feel free to open issues or submit pull requests to improve functionality, usability, or documentation.
-
-
-
-AAAAAA
