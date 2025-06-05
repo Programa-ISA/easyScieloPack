@@ -1,7 +1,3 @@
----
-output: github_document
----
-
 # easyScieloPak <img src="https://img.shields.io/badge/R-package-blue.svg" alt="R badge" align="right"/>
 
 **easyScieloPak** is an R package that allows you to search and access academic articles from [SciELO](https://scielo.org) programmatically.
