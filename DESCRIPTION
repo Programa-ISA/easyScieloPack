@@ -16,3 +16,5 @@ Imports:
     magrittr,
     rlang,
     DT
+URL: https://github.com/PabloIxcamparij/easyScieloPack
+BugReports: https://github.com/PabloIxcamparij/easyScieloPack/issues
