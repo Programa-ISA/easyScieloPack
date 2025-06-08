@@ -1,21 +1,34 @@
-#' Run the SciELO query
+#' Run the SciELO query and get results
 #'
-#' @param obj A scielo_query object.
-#' @return A data frame with the results.
+#' Executes a SciELO query and returns the results as a data frame and interactive table.
+#'
+#' @param obj A scielo_query object created with `search_scielo()`.
+#' @return A DT::datatable object containing the results (title, authors, year, DOI).
 #' @export
-#'
 #' @importFrom utils URLencode
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
+#' @examples
+#' \dontrun{
+#' # After creating a query:
+#' results <- search_scielo("salud ambiental Costa Rica") |>
+#'   nmax(5) |>
+#'   run()
+#' }
+run <- function(obj) {
+  # Verificación de clase mejorada
+  if (!inherits(obj, "scielo_query")) {
+    stop("El objeto debe ser creado con search_scielo()", call. = FALSE)
+  }
 
-
-.run <- function(obj) {
-  if (!inherits(obj, "scielo_query")) stop("El objeto no es de clase 'scielo_query'")
-
-  requireNamespace("httr")
-  requireNamespace("xml2")
-  requireNamespace("rvest")
-  requireNamespace("dplyr")
+  # Carga de dependencias silenciosa
+  suppressPackageStartupMessages({
+    requireNamespace("httr", quietly = TRUE)
+    requireNamespace("xml2", quietly = TRUE)
+    requireNamespace("rvest", quietly = TRUE)
+    requireNamespace("dplyr", quietly = TRUE)
+    requireNamespace("DT", quietly = TRUE)
+  })
 
   base_url <- "https://search.scielo.org/"
   encoded_query <- URLencode(obj$query)
@@ -108,14 +121,7 @@
     from_idx <- from_idx + count
   }
 
-  dplyr::bind_rows(results) %>% dplyr::as_tibble()
-
   df <- dplyr::bind_rows(results)
-
-  if (interactive()) {
-    DT::datatable(df)
-  } else {
-    df
-  }
+  DT::datatable(df)
 
 }

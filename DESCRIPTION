@@ -1,9 +1,11 @@
 Package: easyScieloPack
-Title: What the Package Does (One Line, Title Case)
+Title: Easy Interface to Search SciELO Database
 Version: 0.0.0.9000
 Authors@R: 
-    person("Pabblo", "Ixcamparij", , "j.pablo.soto@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+    person("Pablo", "Ixcamparij", , "j.pablo.soto@example.com", role = c("aut", "cre"))
+Description: Provides a simple interface to search and retrieve scientific articles 
+    from the SciELO (Scientific Electronic Library Online) database. It allows querying,
+    filtering and visualizing results in an interactive table.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -15,6 +17,7 @@ Imports:
     dplyr,
     magrittr,
     rlang,
-    DT
+    DT,
+    stringr
 URL: https://github.com/PabloIxcamparij/easyScieloPack
 BugReports: https://github.com/PabloIxcamparij/easyScieloPack/issues
