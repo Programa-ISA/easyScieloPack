@@ -2,18 +2,28 @@
 % Please edit documentation in R/search_scielo.R
 \name{search_scielo}
 \alias{search_scielo}
-\title{Create a new SciELO query object}
+\title{Create a SciELO query object}
 \usage{
 search_scielo(query, lang = "es")
 }
 \arguments{
-\item{query}{Search term.}
+\item{query}{Search string (e.g., "climate change").}
 
-\item{lang}{Language (default "es").}
+\item{lang}{Language for results ("es" for Spanish, "pt" for Portuguese, "en" for English).}
 }
 \value{
-An object of class \code{scielo_query}.
+An object of class 'scielo_query' containing the search parameters.
 }
 \description{
-Create a new SciELO query object
+Initializes a query to search in the SciELO database. This is the first function
+to use in the workflow, followed by \code{nmax()} and \code{run()}.
+}
+\examples{
+# Basic usage:
+query <- search_scielo("biodiversity conservation")
+
+# Complete workflow:
+resultados <- search_scielo("salud ambiental Costa Rica") |>
+  nmax(10) |>
+  run()
 }
