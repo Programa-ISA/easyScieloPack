@@ -1,7 +1,6 @@
 #' Create a SciELO query object
 #'
-#' Initializes a query to search in the SciELO database. This is the first function
-#' to use in the workflow, followed by `nmax()` and `run()`.
+#' Initializes a query to search in the SciELO database with support for multiple filters.
 #'
 #' @param query Search string (e.g., "climate change").
 #' @param lang Language for results ("es" for Spanish, "pt" for Portuguese, "en" for English).
@@ -11,16 +10,21 @@
 #' # Basic usage:
 #' query <- search_scielo("biodiversity conservation")
 #'
-#' # Complete workflow:
-#' resultados <- search_scielo("salud ambiental Costa Rica") |>
-#'   nmax(10) |>
-#'   run()
+#' # With filters:
+#' query <- search_scielo("forest") |>
+#'   languages("es", "en") |>
+#'   categories("ecology") |>
+#'   journals("Revista de Biología Tropical")
 search_scielo <- function(query, lang = "es") {
   structure(
     list(
       query = query,
       lang = lang,
-      n_max = NULL
+      n_max = NULL,
+      journals = character(),
+      languages = character(),
+      lang_operator = "AND",
+      categories = character()
     ),
     class = "scielo_query"
   )

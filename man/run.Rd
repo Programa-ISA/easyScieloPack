@@ -2,24 +2,26 @@
 % Please edit documentation in R/run.R
 \name{run}
 \alias{run}
-\title{Run the SciELO query and get results}
+\title{Run the SciELO query and retrieve results}
 \usage{
 run(obj)
 }
 \arguments{
-\item{obj}{A scielo_query object created with \code{search_scielo()}.}
+\item{obj}{A \code{scielo_query} object created with \code{search_scielo()}.}
 }
 \value{
-A DT::datatable object containing the results (title, authors, year, DOI).
+A \code{DT::datatable} object containing the query results (title, authors, year, DOI).
 }
 \description{
-Executes a SciELO query and returns the results as a data frame and interactive table.
+Executes the query stored in a \code{scielo_query} object and fetches the results as a datatable.
 }
 \examples{
 \dontrun{
-# After creating a query:
-results <- search_scielo("salud ambiental Costa Rica") |>
-  nmax(5) |>
+search_scielo("salud ambiental Costa Rica") |>
+  journals("Población y Salud en Mesoamérica") |>
+  categories("health", "sciences") |>
+  languages("es") |>
+  nmax(10) |>
   run()
 }
 }

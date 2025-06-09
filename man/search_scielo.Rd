@@ -15,15 +15,15 @@ search_scielo(query, lang = "es")
 An object of class 'scielo_query' containing the search parameters.
 }
 \description{
-Initializes a query to search in the SciELO database. This is the first function
-to use in the workflow, followed by \code{nmax()} and \code{run()}.
+Initializes a query to search in the SciELO database with support for multiple filters.
 }
 \examples{
 # Basic usage:
 query <- search_scielo("biodiversity conservation")
 
-# Complete workflow:
-resultados <- search_scielo("salud ambiental Costa Rica") |>
-  nmax(10) |>
-  run()
+# With filters:
+query <- search_scielo("forest") |>
+  languages("es", "en") |>
+  categories("ecology") |>
+  journals("Revista de Biología Tropical")
 }
