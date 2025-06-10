@@ -8,14 +8,14 @@
 #' @export
 #' @examples
 #' # Create query limited to 20 results:
-#' query <- search_scielo("salud ambiental Costa Rica") |>
+#' query <- search_scielo("environmental sciences") |>
 #'   nmax(20)
 nmax <- function(obj, value) {
   if (!inherits(obj, "scielo_query")) {
-    stop("El objeto debe ser creado con search_scielo()", call. = FALSE)
+    stop("The object must be created with search_scielo()", call. = FALSE)
   }
   if (!is.numeric(value) || value <= 0) {
-    stop("value debe ser un número positivo", call. = FALSE)
+    stop("value must be a positive number", call. = FALSE)
   }
   obj$n_max <- as.integer(value)
   obj

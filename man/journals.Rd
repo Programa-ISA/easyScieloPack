@@ -18,5 +18,5 @@ The modified query object.
 Filter by journal names
 }
 \examples{
-query <- search_scielo("biology") |> journals("Revista de Biología Tropical")
+query <- search_scielo("biology") |> journals("environmental sciences")
 }

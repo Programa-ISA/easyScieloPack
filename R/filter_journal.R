@@ -5,7 +5,7 @@
 #' @return The modified query object.
 #' @export
 #' @examples
-#' query <- search_scielo("biology") |> journals("Revista de Biología Tropical")
+#' query <- search_scielo("biology") |> journals("environmental sciences")
 journals <- function(obj, ...) {
   if (!inherits(obj, "scielo_query")) {
     stop("Object must be created with search_scielo()", call. = FALSE)

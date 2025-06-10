@@ -10,9 +10,9 @@
 #' @importFrom rlang .data
 #' @examples
 #' \dontrun{
-#' search_scielo("salud ambiental Costa Rica") |>
-#'   journals("Población y Salud en Mesoamérica") |>
-#'   categories("health", "sciences") |>
+#' search_scielo("environmental sciences") |>
+#'   journals("Uniciencia") |>
+#'   categories("sciences") |>
 #'   languages("es") |>
 #'   nmax(10) |>
 #'   run()
@@ -130,11 +130,30 @@ run <- function(obj) {
         paste(collapse = " ") %>%
         stringr::str_extract("\\b\\d{4}\\b")
 
+      # Get ID
+      article_id <- article %>%
+        rvest::html_attr("id")
+
+      # Plus abstract in English
+      abstract_id <- paste0(article_id, "_en")
+
+      # Search el abstract
+      abstract_text <- NA
+      if (!is.na(abstract_id)) {
+        abstract_node <- page %>%
+          rvest::html_node(sprintf("div#%s", abstract_id))
+        if (!is.null(abstract_node)) {
+          abstract_text <- abstract_node %>%
+            rvest::html_text(trim = TRUE)
+        }
+      }
+
       results[[length(results) + 1]] <- data.frame(
         title = title,
         authors = authors,
         year = year,
         doi = doi,
+        abstract = abstract_text,
         stringsAsFactors = FALSE
       )
 

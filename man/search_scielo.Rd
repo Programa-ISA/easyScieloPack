@@ -23,7 +23,7 @@ query <- search_scielo("biodiversity conservation")
 
 # With filters:
 query <- search_scielo("forest") |>
-  languages("es", "en") |>
+  languages("en") |>
   categories("ecology") |>
-  journals("Revista de Biología Tropical")
+  journals("Uniciencia")
 }

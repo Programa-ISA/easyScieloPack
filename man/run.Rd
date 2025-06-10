@@ -17,9 +17,9 @@ Executes the query stored in a \code{scielo_query} object and fetches the result
 }
 \examples{
 \dontrun{
-search_scielo("salud ambiental Costa Rica") |>
-  journals("Población y Salud en Mesoamérica") |>
-  categories("health", "sciences") |>
+search_scielo("environmental sciences") |>
+  journals("Uniciencia") |>
+  categories("sciences") |>
   languages("es") |>
   nmax(10) |>
   run()

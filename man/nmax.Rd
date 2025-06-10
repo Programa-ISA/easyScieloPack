@@ -19,6 +19,6 @@ Limits the number of results to return from a SciELO query.
 }
 \examples{
 # Create query limited to 20 results:
-query <- search_scielo("salud ambiental Costa Rica") |>
+query <- search_scielo("environmental sciences") |>
   nmax(20)
 }

@@ -12,9 +12,9 @@
 #'
 #' # With filters:
 #' query <- search_scielo("forest") |>
-#'   languages("es", "en") |>
+#'   languages("en") |>
 #'   categories("ecology") |>
-#'   journals("Revista de Biología Tropical")
+#'   journals("Uniciencia")
 search_scielo <- function(query, lang = "es") {
   structure(
     list(
