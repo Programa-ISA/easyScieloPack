@@ -12,9 +12,9 @@
 #'
 #' # With filters:
 #' query <- search_scielo("forest") |>
-#'   languages("en") |>
-#'   categories("ecology") |>
-#'   journals("Uniciencia")
+#'    languages("en") |>
+#'    categories("ecology") |>
+#'    journals("Uniciencia")
 search_scielo <- function(query, lang = "es") {
   structure(
     list(
@@ -24,7 +24,9 @@ search_scielo <- function(query, lang = "es") {
       journals = character(),
       languages = character(),
       lang_operator = "AND",
-      categories = character()
+      categories = character(),
+      year_start = NULL, # Explicitly initialize year_start
+      year_end = NULL    # Explicitly initialize year_end
     ),
     class = "scielo_query"
   )

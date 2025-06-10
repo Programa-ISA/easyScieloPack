@@ -50,13 +50,24 @@ run <- function(obj) {
     paste0("&filter_boolean_operator%5B", param, "%5D%5B%5D=", op)
   }
 
+  # Helper to build year filters
+  build_year_filter <- function(start_year, end_year) {
+    if (is.null(start_year) || is.null(end_year)) return("")
+
+    # Generate sequence of years
+    years <- seq(start_year, end_year)
+    # Create an array of strings, each formatted as '&filter%5Byear_cluster%5D%5B%5D=YYYY'
+    # Then collapse them into a single string.
+    paste0(paste0("&filter%5Byear_cluster%5D%5B%5D=", years), collapse = "")
+  }
   # Combine filters into one string
   filters <- paste0(
     build_filter("in", obj$collections),
     build_filter("journal_title", obj$journals),
     build_filter("la", obj$languages),
     build_operator("la", obj$lang_operator),
-    build_filter("wok_subject_categories", obj$categories)
+    build_filter("wok_subject_categories", obj$categories),
+    build_year_filter(obj$year_start, obj$year_end)
   )
 
   # First request
@@ -77,13 +88,23 @@ run <- function(obj) {
 
   first_page <- xml2::read_html(first_resp)
 
+
+  # If n_max is not specified, try to get the total number of hits from the first page
   if (is.null(obj$n_max)) {
-    total_hits <- first_page %>%
-      rvest::html_node("#TotalHits") %>%
-      rvest::html_text(trim = TRUE) %>%
-      gsub("\\D", "", .) %>%
-      as.integer()
-    obj$n_max <- total_hits
+    total_hits_node <- first_page %>%
+      rvest::html_node("#TotalHits")
+
+    if (!is.null(total_hits_node)) {
+      total_hits <- total_hits_node %>%
+        rvest::html_text(trim = TRUE) %>%
+        gsub("\\D", "", .) %>% # Remove non-numeric characters
+        as.integer()
+      obj$n_max <- total_hits
+    } else {
+      # Fallback if TotalHits node is not found, assume a reasonable default or error
+      warning("Could not determine total number of hits from the page. Setting n_max to a default of 100 or consider setting it manually.")
+      obj$n_max <- 100 # Default to 100 if total hits cannot be determined
+    }
   }
 
   while (total < obj$n_max) {
@@ -106,7 +127,13 @@ run <- function(obj) {
     page <- xml2::read_html(resp)
     articles <- page %>% rvest::html_nodes(".item")
 
-    if (length(articles) == 0) break
+    # If no articles are found on the current page, stop fetching
+    if (length(articles) == 0) {
+      if (total == 0) {
+        message("No articles found for the given query and filters.")
+      }
+      break
+    }
 
     for (article in articles) {
       if (total >= obj$n_max) break
@@ -149,10 +176,10 @@ run <- function(obj) {
       }
 
       results[[length(results) + 1]] <- data.frame(
-        title = title,
-        authors = authors,
-        year = year,
-        doi = doi,
+        title = ifelse(is.null(title), NA, title), # Handle potentially missing title
+        authors = ifelse(is.null(authors), NA, authors), # Handle potentially missing authors
+        year = ifelse(is.null(year), NA, year),     # Handle potentially missing year
+        doi = ifelse(is.null(doi), NA, doi),         # Handle potentially missing DOI
         abstract = abstract_text,
         stringsAsFactors = FALSE
       )
