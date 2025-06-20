@@ -4,12 +4,36 @@
 \alias{search_scielo}
 \title{Create a SciELO query object}
 \usage{
-search_scielo(query, lang = "es")
+search_scielo(
+  query,
+  lang = "en",
+  n_max = NULL,
+  journals = NULL,
+  languages = NULL,
+  lang_operator = "AND",
+  categories = NULL,
+  year_start = NULL,
+  year_end = NULL
+)
 }
 \arguments{
 \item{query}{Search string (e.g., "climate change").}
 
 \item{lang}{Language for results ("es" for Spanish, "pt" for Portuguese, "en" for English).}
+
+\item{n_max}{Maximum number of results to return (integer). Defaults to NULL (no limit).}
+
+\item{journals}{A character vector of journal titles to filter by. Defaults to NULL.}
+
+\item{languages}{A character vector of languages to filter by (e.g., "en", "es", "pt"). Defaults to NULL.}
+
+\item{lang_operator}{Operator for combining multiple language filters ("AND" or "OR"). Defaults to "AND".}
+
+\item{categories}{A character vector of subject categories to filter by. Defaults to NULL.}
+
+\item{year_start}{Start year for filtering results by publication year (integer). Defaults to NULL.}
+
+\item{year_end}{End year for filtering results by publication year (integer). Defaults to NULL.}
 }
 \value{
 An object of class 'scielo_query' containing the search parameters.
@@ -19,10 +43,22 @@ Initializes a query to search in the SciELO database with support for multiple f
 }
 \examples{
 # Basic usage:
-query <- search_scielo("biodiversity conservation")
+query_basic <- search_scielo("biodiversity conservation")
 
-# With filters:
-query <- search_scielo("forest") |>
+# With filters passed directly:
+query_filtered <- search_scielo(
+   query = "pesticidas salud ambiental",
+   lang = "es", # This was already present
+   languages = "en", # Article language filter (English)
+   journals = c("Uniciencia", "Revista Ambiente & Água"),
+   categories = "ecology",
+   n_max = 50,
+   year_start = 2010,
+   year_end = 2023E
+)
+
+# You can still use the pipe syntax for more granular control or chaining:
+query_piped <- search_scielo("forest") |>
    languages("en") |>
    categories("ecology") |>
    journals("Uniciencia")

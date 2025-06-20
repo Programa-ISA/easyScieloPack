@@ -10,7 +10,7 @@
 #' @importFrom utils URLencode
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
-#' @method print scielo_query  <-- ¡ESTA ES LA LÍNEA CRUCIAL!
+#' @method print scielo_query
 #' @examples
 #' \dontrun{
 #' search_scielo("environmental sciences") |>
@@ -19,8 +19,8 @@
 #'    languages("es") |>
 #'    nmax(10)
 #' }
-print.scielo_query <- function(x, ...) { # <-- CAMBIO AQUÍ (obj a x, y añadir ...)
-  obj <- x # Mantén esta línea si prefieres usar 'obj' dentro de la función para mayor claridad
+print.scielo_query <- function(x, ...) {
+  obj <- x
   if (!inherits(obj, "scielo_query")) {
     stop("The object must be created with search_scielo()", call. = FALSE)
   }

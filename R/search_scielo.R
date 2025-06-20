@@ -44,26 +44,19 @@ search_scielo <- function(query,
                           year_start = NULL,
                           year_end = NULL) {
   
-  # Initialize the structure list with default/passed values
-  query_list <- list(
-    query = query,
-    lang = lang,
-    n_max = n_max,
-    journals = if (is.null(journals)) character() else as.character(journals),
-    languages = if (is.null(languages)) character() else as.character(languages),
-    lang_operator = lang_operator,
-    collections = character(), # Ensure 'collections' is initialized if used in 'build_filter'
-    categories = if (is.null(categories)) character() else as.character(categories),
-    year_start = year_start,
-    year_end = year_end
-  )
-  
-  # If filters are passed directly, they can overwrite the default values in the list.
-  # This is where inputs are "normalized" to the formats expected by `print.scielo_query`.
-  # For example, if `languages` is NULL, it will remain character(). If a value is passed, it will be used.
-  
   structure(
-    query_list,
+    list(
+      query = query,
+      lang = lang,
+      n_max = n_max,
+      journals = if (is.null(journals)) character() else as.character(journals),
+      languages = if (is.null(languages)) character() else as.character(languages),
+      lang_operator = lang_operator,
+      collections = character(),
+      categories = if (is.null(categories)) character() else as.character(categories),
+      year_start = year_start,
+      year_end = year_end
+    ),
     class = "scielo_query"
   )
 }
