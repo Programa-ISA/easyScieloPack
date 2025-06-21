@@ -7,23 +7,31 @@
 \method{print}{scielo_query}(x, ...)
 }
 \arguments{
-\item{x}{A \code{scielo_query} object created with \code{search_scielo()}.  <-- CAMBIO AQUÍ}
+\item{x}{A \code{scielo_query} object created with \code{search_scielo()}.}
 
-\item{...}{Additional arguments passed to or from other methods. <-- NUEVO PARÁMETRO}
+\item{...}{Additional arguments (currently unused).}
 }
 \value{
-A \code{DT::datatable} object containing the query results (title, authors, year, DOI).
+A \code{data.frame} containing the query results (title, authors, year, DOI, abstract).
 }
 \description{
-Executes the query stored in a \code{scielo_query} object and fetches the results as a datatable,
-displaying them when the object is printed or evaluated.
+Executes the query stored in a \code{scielo_query} object and fetches the results as a data frame.
+When the object is printed or evaluated, it will display the search results.
 }
 \examples{
 \dontrun{
-search_scielo("environmental sciences") |>
+# Search for articles and get results as a data frame
+query_results <- search_scielo("environmental sciences") |>
    journals("Uniciencia") |>
    categories("sciences") |>
    languages("es") |>
    nmax(10)
+
+# The 'query_results' object is a data.frame and will be printed automatically
+query_results
+
+# You can also explicitly print it or assign it to a variable
+my_df <- print(query_results)
+head(my_df)
 }
 }
