@@ -193,7 +193,10 @@ print.scielo_query <- function(x, ...) {
     from_idx <- from_idx + count
   }
   
-  df <- dplyr::bind_rows(results)
-  print(DT::datatable(df))
+  df <- do.call(rbind, results)
+  rownames(df) <- NULL
+  
+  print(df) 
   invisible(df)
+  
 }
