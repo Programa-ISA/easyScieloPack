@@ -6,22 +6,18 @@
 #' @export
 #' @examples
 #' search_scielo("agua potable") |> collections("Costa Rica", "mex")
-collections <- function(obj, ...) {
-  if (!inherits(obj, "scielo_query")) {
-    stop("Object must be created with search_scielo()", call. = FALSE)
-  }
-  
+#' Normalize collection names to SciELO codes
+#' @keywords internal
+normalize_collections <- function(collections) {
   country_to_code <- c(
     "Costa Rica" = "cri", "México" = "mex", "Brasil" = "bra", "Colombia" = "col",
     "Argentina" = "arg", "Chile" = "chl", "Cuba" = "cub", "Perú" = "per",
-    "Venezuela" = "ven", "Uruguay" = "ury", "Paraguay" = "pry", "Panamá" = "pan"
+    "Venezuela" = "ven", "Uruguay" = "ury", "Ecuador" = "ecu", "Paraguay" = "pry", "Panamá" = "pan"
   )
-  
-  inputs <- unlist(list(...), use.names = FALSE)
   
   normalize <- function(x) tolower(iconv(x, to = "ASCII//TRANSLIT"))
   
-  codes <- sapply(inputs, function(val) {
+  sapply(collections, function(val) {
     if (tolower(val) %in% country_to_code) {
       return(country_to_code[[val]])
     }
@@ -31,9 +27,7 @@ collections <- function(obj, ...) {
       return(unname(country_to_code[match_idx]))
     }
     
-    val
+    val # fallback to original value if no match
   }, USE.NAMES = FALSE)
-  
-  obj$collections <- unique(c(obj$collections, codes))
-  obj
 }
+

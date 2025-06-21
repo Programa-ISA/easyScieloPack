@@ -2,11 +2,11 @@
 
 S3method(print,scielo_query)
 export(categories)
-export(collections)
 export(fetch_scielo_results)
 export(journals)
 export(languages)
 export(nmax)
+export(normalize_collections)
 export(search_scielo)
 export(years)
 importFrom(dplyr,bind_rows)

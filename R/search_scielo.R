@@ -53,7 +53,7 @@ search_scielo <- function(query,
       lang_operator = lang_operator,
       journals = if (is.null(journals)) character() else as.character(journals),
       languages = if (is.null(languages)) character() else as.character(languages),
-      collections = if (is.null(collections)) character() else as.character(collections),
+      collections = if (is.null(collections)) character() else normalize_collections(as.character(collections)),
       categories = if (is.null(categories)) character() else as.character(categories),
       year_start = year_start,
       year_end = year_end
