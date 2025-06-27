@@ -45,7 +45,7 @@ search_scielo <- function(query,
                           year_start = NULL,
                           year_end = NULL) {
   
-  structure(
+  query_obj <- structure(
     list(
       query = query,
       lang = lang,
@@ -60,4 +60,6 @@ search_scielo <- function(query,
     ),
     class = "scielo_query"
   )
+  
+  return(fetch_scielo_results(query_obj))
 }
