@@ -2,27 +2,21 @@
 % Please edit documentation in R/filter_year.R
 \name{years}
 \alias{years}
-\title{Filter by year range}
+\title{Validate year range for SciELO query}
 \usage{
-years(obj, start_year, end_year)
+years(start_year, end_year)
 }
 \arguments{
-\item{obj}{A \code{scielo_query} object.}
+\item{start_year}{Integer. Start year for filtering (inclusive).}
 
-\item{start_year}{Starting year (inclusive).}
-
-\item{end_year}{Ending year (inclusive).}
+\item{end_year}{Integer. End year for filtering (inclusive).}
 }
 \value{
-The modified \code{scielo_query} object.
+A list with named elements \code{year_start} and \code{year_end}.
 }
 \description{
-Sets a range of years to filter the SciELO query results.
+Ensures that start and end years are valid numeric values and in correct order.
 }
 \examples{
-# Filter for a single year
-query <- search_scielo("biology") |> years(2020, 2020)
-
-# Filter for a range of years
-query <- search_scielo("medicine") |> years(2018, 2022)
+valid_years <- years(2018, 2022)
 }

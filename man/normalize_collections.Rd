@@ -2,23 +2,23 @@
 % Please edit documentation in R/filter_collections.R
 \name{normalize_collections}
 \alias{normalize_collections}
-\title{Filter by SciELO collection (country or ISO code)}
+\title{Normalize SciELO collection names or ISO codes}
 \usage{
 normalize_collections(collections)
 }
 \arguments{
-\item{obj}{A scielo_query object.}
-
-\item{...}{Country names ("Costa Rica") or collection codes ("cri").}
+\item{collections}{A character vector of length 1: a country name (e.g., "Costa Rica")
+or a valid SciELO ISO code (e.g., "cri").}
 }
 \value{
-Modified query object with collection filter.
+A character string representing the normalized SciELO collection code.
 }
 \description{
-Filter by SciELO collection (country or ISO code)
+Converts country names or ISO codes into valid SciELO collection codes.
+Only one value is allowed.
 }
 \examples{
-search_scielo("agua potable") |> collections("Costa Rica", "mex")
-Normalize collection names to SciELO codes
+normalize_collections("Costa Rica")  # returns "cri"
+normalize_collections("cri")         # returns "cri"
+
 }
-\keyword{internal}

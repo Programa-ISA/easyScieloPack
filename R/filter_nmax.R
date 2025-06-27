@@ -1,22 +1,16 @@
-#' Set maximum number of results
+#' Normalize and validate n_max
 #'
-#' Limits the number of results to return from a SciELO query.
+#' Ensures that the value of n_max is a positive integer or NULL.
 #'
-#' @param obj A scielo_query object from `search_scielo()`.
-#' @param value Maximum number of results (integer).
-#' @return The modified scielo_query object.
-#' @export
-#' @examples
-#' # Create query limited to 20 results:
-#' query <- search_scielo("environmental sciences") |>
-#'   nmax(20)
-nmax <- function(obj, value) {
-  if (!inherits(obj, "scielo_query")) {
-    stop("The object must be created with search_scielo()", call. = FALSE)
+#' @param value The value to validate.
+#' @return An integer or NULL.
+#' @keywords internal
+normalize_nmax <- function(value) {
+  if (is.null(value)) return(NULL)
+  
+  if (!is.numeric(value) || length(value) != 1 || is.na(value) || value <= 0) {
+    stop("The 'n_max' parameter must be a positive numeric value or NULL.", call. = FALSE)
   }
-  if (!is.numeric(value) || value <= 0) {
-    stop("value must be a positive number", call. = FALSE)
-  }
-  obj$n_max <- as.integer(value)
-  obj
+  
+  as.integer(value)
 }

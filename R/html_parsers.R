@@ -36,7 +36,19 @@ parse_scielo_page <- function(html_page, query_obj) {
   page_results <- list()
   for (article in articles) {
     title <- extract_text(article, ".title")
-    authors <- extract_text(article, ".authors")
+    
+    # --- CAMBIO AQUÍ para extraer todos los autores ---
+    authors_nodes <- article %>% rvest::html_nodes(".authors a.author")
+    if (length(authors_nodes) > 0) {
+      # Extract text from all author nodes and collapse them into a single string
+      authors <- paste(rvest::html_text(authors_nodes, trim = TRUE), collapse = "; ")
+    } else {
+      # Fallback to the parent node's text if individual authors are not found
+      # This can happen if the structure changes or is different for some articles.
+      authors <- extract_text(article, ".authors")
+    }
+    # --- FIN DEL CAMBIO ---
+    
     doi <- extract_attr_from_child(article, ".DOIResults a", "href")
     
     year_nodes <- article %>% rvest::html_node(".source") %>% rvest::html_nodes("span")
@@ -56,11 +68,6 @@ parse_scielo_page <- function(html_page, query_obj) {
       abstract_id_en <- paste0(article_id, "_en")
       abstract_node <- html_page %>% rvest::html_node(sprintf("div#%s", abstract_id_en))
       
-      # If no English abstract and user's preferred search lang is not English, try user's preferred search lang
-      # Note: query_obj$lang is the interface language, query_obj$languages is the article content language.
-      # We should prioritize abstract language based on query_obj$languages if it's specified,
-      # otherwise fall back to query_obj$lang (interface language) or English.
-      # For simplicity here, sticking to current logic: try English, then query_obj$lang if not English
       if (is.null(abstract_node) && query_obj$lang != "en") {
         abstract_id_lang <- paste0(article_id, "_", query_obj$lang)
         abstract_node <- html_page %>% rvest::html_node(sprintf("div#%s", abstract_id_lang))

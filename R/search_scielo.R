@@ -1,39 +1,51 @@
-#' Create a SciELO query object
+#' Search SciELO and return results as a data.frame
 #'
-#' Initializes a query to search in the SciELO database with support for multiple filters.
+#' Executes a search in the SciELO database using multiple optional filters,
+#' and returns the results as a data frame.
 #'
-#' @param query Search string (e.g., "climate change").
-#' @param lang Language for results ("es" for Spanish, "pt" for Portuguese, "en" for English).
-#' @param n_max Maximum number of results to return (integer). Defaults to NULL (no limit).
-#' @param journals A character vector of journal titles to filter by. Defaults to NULL.
-#' @param languages A character vector of languages to filter by (e.g., "en", "es", "pt"). Defaults to NULL.
-#' @param lang_operator Operator for combining multiple language filters ("AND" or "OR"). Defaults to "AND".
-#' @param categories A character vector of subject categories to filter by. Defaults to NULL.
-#' @param year_start Start year for filtering results by publication year (integer). Defaults to NULL.
-#' @param year_end End year for filtering results by publication year (integer). Defaults to NULL.
-#' @return An object of class 'scielo_query' containing the search parameters.
+#' Note: Only one value per filter category is currently supported (e.g., only one language).
+#'
+#' @param query Search term (e.g., "climate change"). Required.
+#' @param lang Interface language for SciELO website ("en", "es", "pt"). Default is "en".
+#' @param lang_operator Operator for combining language filters ("AND" or "OR"). Default is "AND".
+#' @param n_max Maximum number of results to return. Optional.
+#' @param journals Vector of journal names to filter. Only one supported. Optional.
+#' @param languages Vector of article languages to filter (e.g., "en").
+#' @param categories Vector of subject categories (e.g., "ecology").
+#' @param year_start Start year for filtering articles. Optional.
+#' @param year_end End year for filtering articles. Optional.
+#'
+#' @return A data.frame with the search results.
 #' @export
+#'
 #' @examples
-#' # Basic usage:
-#' query_basic <- search_scielo("biodiversity conservation")
+#' # Simple search with a keyword
+#' df1 <- search_scielo("salud ambiental")
 #'
-#' # With filters passed directly:
-#' query_filtered <- search_scielo(
-#'    query = "pesticidas salud ambiental",
-#'    lang = "es", # This was already present
-#'    languages = "en", # Article language filter (English)
-#'    journals = c("Uniciencia", "Revista Ambiente & Água"),
-#'    categories = "ecology",
-#'    n_max = 50,
-#'    year_start = 2010,
-#'    year_end = 2023E
-#' )
+#' # Limit number of results to 5
+#' df2 <- search_scielo("salud ambiental", n_max = 5)
 #'
-#' # You can still use the pipe syntax for more granular control or chaining:
-#' query_piped <- search_scielo("forest") |>
-#'    languages("en") |>
-#'    categories("ecology") |>
-#'    journals("Uniciencia")
+#' # Filter by SciELO collection (country name or code)
+#' df3 <- search_scielo("salud ambiental", collections = "Ecuador")
+#' df4 <- search_scielo("salud ambiental", collections = "cri")  # Costa Rica by ISO code
+#'
+#' # Filter by article language
+#' df5 <- search_scielo("salud ambiental", languages = "es")
+#'
+#' # Filter by a specific journal
+#' df6 <- search_scielo("salud ambiental", journals = "Revista Ambiente & Água")
+#'
+#' # Filter by subject category
+#' df7 <- search_scielo("salud ambiental", categories = "environmental sciences")
+#'
+#' # Filter by year range
+#' df8 <- search_scielo("salud ambiental", year_start = 2015, year_end = 2020)
+#'
+#' # Combine multiple filters
+#' df9 <- search_scielo("salud ambiental", collections = "Mexico", languages = "es",
+#'                      year_start = 2015, year_end = 2020, n_max = 10)
+#'                      
+#'                      
 search_scielo <- function(query,
                           lang = "en",
                           lang_operator = "AND",
@@ -45,21 +57,53 @@ search_scielo <- function(query,
                           year_start = NULL,
                           year_end = NULL) {
   
+  # ---------------------------
+  # Input validations
+  # ---------------------------
+  
+  if (missing(query) || !is.character(query) || nchar(query) < 2) {
+    stop("The 'query' parameter must be a non-empty character string.", call. = FALSE)
+  }
+  
+  if (!lang %in% c("en", "es", "pt")) {
+    stop("The 'lang' parameter must be one of: 'en', 'es', 'pt'.", call. = FALSE)
+  }
+  
+  if (!lang_operator %in% c("AND", "OR")) {
+    stop("The 'lang_operator' parameter must be either 'AND' or 'OR'.", call. = FALSE)
+  }
+  
+  # Inside search_scielo
+  year_vals <- NULL
+  if (!is.null(year_start) && !is.null(year_end)) {
+    year_vals <- years(year_start, year_end)
+  } else if (!is.null(year_start) || !is.null(year_end)) {
+    stop("Both 'year_start' and 'year_end' must be provided together.", call. = FALSE)
+  }
+  
+  # ---------------------------
+  # Build internal query object
+  # ---------------------------
+  
   query_obj <- structure(
     list(
       query = query,
       lang = lang,
-      n_max = n_max,
+      n_max = normalize_nmax(n_max),
       lang_operator = lang_operator,
-      journals = if (is.null(journals)) character() else as.character(journals),
-      languages = if (is.null(languages)) character() else as.character(languages),
+      languages = if (is.null(languages)) character() else normalize_languages(languages),
       collections = if (is.null(collections)) character() else normalize_collections(as.character(collections)),
-      categories = if (is.null(categories)) character() else as.character(categories),
-      year_start = year_start,
-      year_end = year_end
+      categories = if (is.null(categories)) character() else normalize_categories(categories),
+      journals   = if (is.null(journals)) character() else normalize_journals(journals),
+      year_start = if (!is.null(year_vals)) year_vals$year_start else NULL,
+      year_end = if (!is.null(year_vals)) year_vals$year_end else NULL
     ),
     class = "scielo_query"
   )
+  
+  # ---------------------------
+  # Perform scraping and return results
+  # ---------------------------
   
   return(fetch_scielo_results(query_obj))
 }
