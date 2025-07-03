@@ -9,6 +9,8 @@ The main goal of **easyScieloPak** is to simplify the process of querying SciELO
 - Allowing filters like year, collection (country), language, journal, and subject category.
 - Handling pagination, data parsing, and cleaning automatically.
 - Providing clear and validated feedback when a query is incorrect.
+- Minimizing errors due to anti-scraping measures (e.g., 403 HTTP errors).
+
 
 ## Features
 
@@ -16,6 +18,8 @@ The main goal of **easyScieloPak** is to simplify the process of querying SciELO
 - Filter results by year, collection, language, and more.
 - Retrieve article metadata including title, authors, publication year, and link.
 - Designed with intuitive syntax.
+- Intelligent request handling to avoid triggering SciELO's anti-bot protection.
+
 
 
 ## Installation
@@ -65,6 +69,14 @@ View(df) # View results in RStudio
   
   *Note: Reinstalling the package has no direct effect on the block.*
 
+-**Default fallback limit**: If the total number of available results cannot be determined, the query will default to fetching a maximum of 100 articles.
+
+ Recent Improvements
+-Rotating User-Agents: Each request uses a different User-Agent string (Chrome, Firefox, Safari variants) to appear more like a real browser and avoid blocking.
+
+-Random delays between requests reduce server load and minimize scraping detection.
+
+-Retry logic: If a request fails, the package retries automatically with a different User-Agent.
 
 ## Planned Improvements
 
