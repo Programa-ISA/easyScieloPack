@@ -2,7 +2,7 @@ Package: easyScieloPack
 Title: Easy Interface to Search SciELO Database
 Version: 0.0.0.9000
 Authors@R:
-    person("Pablo", "Ixcamparij", email = "j.pablo.soto@example.com", role = c("aut", "cre"))
+    person("Pablo", "Ixcamparij", email = "jose.sorto@ucr.ac.cr", role = c("aut", "cre"))
 Description: Provides a simple interface to search and retrieve scientific articles 
     from the SciELO (Scientific Electronic Library Online) database. It allows querying, 
     filtering and visualizing results in an interactive table.
