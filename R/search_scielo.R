@@ -10,6 +10,7 @@
 #' @param lang_operator Operator for combining language filters ("AND" or "OR"). Default is "AND".
 #' @param n_max Maximum number of results to return. Optional.
 #' @param journals Vector of journal names to filter. Only one supported. Optional.
+#' @param collections A character string for filtering by SciELO collection (country name or ISO code, e.g., "Mexico" or "mex").
 #' @param languages Vector of article languages to filter (e.g., "en").
 #' @param categories Vector of subject categories (e.g., "ecology").
 #' @param year_start Start year for filtering articles. Optional.
@@ -18,7 +19,8 @@
 #' @return A data.frame with the search results.
 #' @export
 #'
-#' @examples
+#' @examplesIf interactive()
+#' \dontrun{
 #' # Simple search with a keyword
 #' df1 <- search_scielo("salud ambiental")
 #'
@@ -33,19 +35,14 @@
 #' df5 <- search_scielo("salud ambiental", languages = "es")
 #'
 #' # Filter by a specific journal
-#' df6 <- search_scielo("salud ambiental", journals = "Revista Ambiente & Água")
+#' df6 <- search_scielo("salud ambiental", journals = "Revista Ambiente & Agua")
 #'
 #' # Filter by subject category
 #' df7 <- search_scielo("salud ambiental", categories = "environmental sciences")
 #'
 #' # Filter by year range
 #' df8 <- search_scielo("salud ambiental", year_start = 2015, year_end = 2020)
-#'
-#' # Combine multiple filters
-#' df9 <- search_scielo("salud ambiental", collections = "Mexico", languages = "es",
-#'                      year_start = 2015, year_end = 2020, n_max = 10)
-#'                      
-#'                      
+#' }
 search_scielo <- function(query,
                           lang = "en",
                           lang_operator = "AND",

@@ -1,5 +1,8 @@
 # fetch_scielo_results.R
 
+# Tell R CMD check that `.` is a known variable
+utils::globalVariables(".")
+
 #' Fetch search results from SciELO
 #'
 #' This is the core function that performs the web scraping and data extraction.
@@ -12,6 +15,7 @@
 #' @importFrom xml2 read_html
 #' @importFrom dplyr bind_rows
 #' @importFrom magrittr %>%
+#' @importFrom stats runif
 #' @export
 fetch_scielo_results <- function(query_obj) {
   required_packages <- c("httr", "xml2", "rvest", "dplyr", "stringr")

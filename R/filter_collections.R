@@ -15,10 +15,10 @@
 #'
 normalize_collections <- function(collections) {
   country_to_code <- c(
-    "Costa Rica" = "cri", "México" = "mex", "Brasil" = "bra", "Colombia" = "col",
-    "Argentina" = "arg", "Chile" = "chl", "Cuba" = "cub", "Perú" = "per",
+    "Costa Rica" = "cri", "M\u00e9xico" = "mex", "Brasil" = "bra", "Colombia" = "col",
+    "Argentina" = "arg", "Chile" = "chl", "Cuba" = "cub", "Per\u00fa" = "per",
     "Venezuela" = "ven", "Uruguay" = "ury", "Ecuador" = "ecu",
-    "Paraguay" = "pry", "Panamá" = "pan"
+    "Paraguay" = "pry", "Panam\u00e1" = "pan"
   )
   
   allowed_codes <- unname(country_to_code)

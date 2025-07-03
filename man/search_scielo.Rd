@@ -28,6 +28,8 @@ search_scielo(
 
 \item{journals}{Vector of journal names to filter. Only one supported. Optional.}
 
+\item{collections}{A character string for filtering by SciELO collection (country name or ISO code, e.g., "Mexico" or "mex").}
+
 \item{languages}{Vector of article languages to filter (e.g., "en").}
 
 \item{categories}{Vector of subject categories (e.g., "ecology").}
@@ -47,6 +49,8 @@ and returns the results as a data frame.
 Note: Only one value per filter category is currently supported (e.g., only one language).
 }
 \examples{
+\dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontrun{
 # Simple search with a keyword
 df1 <- search_scielo("salud ambiental")
 
@@ -61,17 +65,13 @@ df4 <- search_scielo("salud ambiental", collections = "cri")  # Costa Rica by IS
 df5 <- search_scielo("salud ambiental", languages = "es")
 
 # Filter by a specific journal
-df6 <- search_scielo("salud ambiental", journals = "Revista Ambiente & Água")
+df6 <- search_scielo("salud ambiental", journals = "Revista Ambiente & Agua")
 
 # Filter by subject category
 df7 <- search_scielo("salud ambiental", categories = "environmental sciences")
 
 # Filter by year range
 df8 <- search_scielo("salud ambiental", year_start = 2015, year_end = 2020)
-
-# Combine multiple filters
-df9 <- search_scielo("salud ambiental", collections = "Mexico", languages = "es",
-                     year_start = 2015, year_end = 2020, n_max = 10)
-                     
-                     
+}
+\dontshow{\}) # examplesIf}
 }
