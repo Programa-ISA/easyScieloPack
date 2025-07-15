@@ -20,7 +20,7 @@
 #' @export
 #'
 #' @examplesIf interactive()
-#' \dontrun{
+#' \donttest{
 #' # Simple search with a keyword
 #' df1 <- search_scielo("salud ambiental")
 #'

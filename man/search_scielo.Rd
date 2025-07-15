@@ -50,7 +50,7 @@ Note: Only one value per filter category is currently supported (e.g., only one 
 }
 \examples{
 \dontshow{if (interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
-\dontrun{
+\donttest{
 # Simple search with a keyword
 df1 <- search_scielo("salud ambiental")
 
