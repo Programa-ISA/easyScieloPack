@@ -20,5 +20,5 @@ Imports:
     magrittr (>= 2.0.3),
     stats,
     stringr (>= 1.5.1)
-URL: https://github.com/PabloIxcamparij/easyScieloPack
-BugReports: https://github.com/PabloIxcamparij/easyScieloPack/issues
+URL: https://github.com/Programa-ISA/easyScieloPack.git
+BugReports: https://github.com/Programa-ISA/easyScieloPack.git/issues
