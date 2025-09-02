@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Build PDF
-        uses: openjournals/joss-actions/compile-paper@v1 
+        uses: openjournals/joss-actions/compile-paper@v1  
         with:
           path: paper
 
