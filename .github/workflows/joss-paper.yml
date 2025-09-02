@@ -14,10 +14,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Build PDF
-        uses: openjournals/joss/.github/actions/compile-paper@main
-        with:
-          path: paper
+      - name: Build PDF with Docker
+        run: |
+          docker run --rm \
+            --volume $PWD/paper:/data \
+            --user $(id -u):$(id -g) \
+            --env JOURNAL=joss \
+            openjournals/inara
 
       - name: Upload PDF
         uses: actions/upload-artifact@v4
