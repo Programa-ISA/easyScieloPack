@@ -89,7 +89,8 @@ search_scielo(
 
 We would like to thank Berendina van Wendel de Joode, coordinator of the Infants' Environmental Health (ISA) Program, for enabling us to test the package in real-world research contexts and for her support throughout its development.
 
-# References 
+# References
+
 
 
 
