@@ -49,24 +49,22 @@ The development version can be installed from GitHub using the remotes package:
 remotes::install_github("Programa-ISA/easyScieloPack")
 ```
 
-A basic workflow to search for articles is straightforward:
-
 ```{r}
 library(easyScieloPack)
 
-# Search for articles in English from Colombian journals
+\# Search for articles in English from Colombian journals
 results_en <- search_scielo(query = "Machine Learning",
                             languages = "en", 
                             collections = "Colombia")
 
-# Search for articles in Spanish from the same collection
+\# Search for articles in Spanish from the same collection
 results_es <- search_scielo(query = "Machine Learning",
                             languages = "es", 
                             collections = "Colombia")
 
-# Compare the number of results
-nrow(results_en)  # Returns 86 results in English
-nrow(results_es)  # Returns 77 results in Spanish
+\# Compare the number of results
+nrow(results_en)  \# Returns 86 results in English
+nrow(results_es)  \# Returns 77 results in Spanish
 ```
 
 The package supports multiple search filters:
@@ -90,6 +88,7 @@ search_scielo(
 We would like to thank Berendina van Wendel de Joode, coordinator of the Infants' Environmental Health (ISA) Program, for enabling us to test the package in real-world research contexts and for her support throughout its development.
 
 # References
+
 
 
 
