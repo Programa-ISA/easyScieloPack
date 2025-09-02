@@ -1,0 +1,26 @@
+name: JOSS Paper Compilation
+on:
+  push:
+    branches: [master]
+    paths: ['paper/**']
+  pull_request:
+    branches: [master]
+    paths: ['paper/**']
+
+jobs:
+  paper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Build PDF
+        uses: openjournals/joss-paper-action@v1
+        with:
+          path: paper
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper
+          path: paper/paper.pdf
