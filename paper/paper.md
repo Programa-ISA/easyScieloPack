@@ -27,7 +27,7 @@ bibliography: paper.bib
 
 The initial phase of a literature review, searching for and documenting a corpus of academic works, is often overlooked and poorly documented, despite being critical to the review's integrity [@Brocke:2009; @Cram:2020]. Programmatic approaches can enhance reproducibility by embedding search logic directly into code, enabling automated, traceable, and transparent workflows as recommended by the Preferred Reporting Items for Systematic reviews and Meta-Analyses (PRISMA-S) [@Rethlefsen:2021]. However, such tools are rare for regionally focused databases.
 
-To address this gap for the SciELO database, we developed `easyScieloPack`, an R package that provides a scriptable interface to SciELO. It allows users to programmatically construct, execute, and document complex literature searches with filters for year, country, language, journal, and subject category. The package returns results as tidy data frames containing key metadata (title, authors, DOI, abstract), making the output immediately ready for downstream analysis, visualization, or export.
+To address this gap for the SciELO (Scientific Electronic Library Online) database, we developed `easyScieloPack`, an R package that provides a scriptable interface to SciELO. It allows users to programmatically construct, execute, and document complex literature searches with filters for year, country, language, journal, and subject category. The package returns results as tidy data frames containing key metadata (title, authors, DOI, abstract), making the output immediately ready for downstream analysis, visualization, or export.
 
 # Statement of need
 
@@ -94,6 +94,7 @@ search_scielo(
 We would like to thank Berendina van Wendel de Joode, coordinator of the Infants' Environmental Health (ISA) Program, for enabling us to test the package in real-world research contexts and for her support throughout its development.
 
 # References
+
 
 
 
