@@ -17,7 +17,7 @@ authors:
 affiliations:
   - name: Infants' Environmental Health (ISA) Program, Central American Institute for Studies on Toxic Substances (IRET), Universidad Nacional, Heredia, Costa Rica
     index: 1
-  - name: Carrera de Informática Empresarial, Sede Guanacaste, Universidad de Costa Rica, Liberia, Costa Rica
+  - name: Business Informatics Program, Guanacaste Campus, University of Costa Rica, Liberia, Costa Rica
     index: 2
 date: 02 September 2025
 bibliography: paper.bib
@@ -94,6 +94,7 @@ search_scielo(
 We would like to thank Berendina van Wendel de Joode, coordinator of the Infants' Environmental Health (ISA) Program, for enabling us to test the package in real-world research contexts and for her support throughout its development.
 
 # References
+
 
 
 
