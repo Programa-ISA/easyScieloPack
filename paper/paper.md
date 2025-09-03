@@ -39,7 +39,7 @@ Researchers relying on SciELO are currently forced to use manual, point-and-clic
 
 The `easyScieloPack` package is available on the Comprehensive R Archive Network (CRAN). The released version can be installed from an R session using:
 
-```{r}
+```r
 install.packages("easyScieloPack")
 ```
 
@@ -94,6 +94,7 @@ search_scielo(
 We would like to thank Berendina van Wendel de Joode, coordinator of the Infants' Environmental Health (ISA) Program, for enabling us to test the package in real-world research contexts and for her support throughout its development.
 
 # References
+
 
 
 
